@@ -71,3 +71,10 @@ minikube service webapp-service -n java-webapp --url
 kubectl get svc webapp-service -n java-webapp
 minikube ip
 ```
+
+## Cleanup
+```bash
+kubectl delete namespace java-webapp
+minikube stop
+minikube delete   # optional: remove cluster
+```
