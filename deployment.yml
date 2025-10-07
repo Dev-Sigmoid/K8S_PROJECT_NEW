@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docker-java-sample-webapp
+  namespace: java-webapp 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docker-java-sample-webapp
+  template:
+    metadata:
+      labels:
+        app: docker-java-sample-webapp
+    spec:
+      containers:
+      - name: webapp
+        image: docker-java-sample-webapp:1.0
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
