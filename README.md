@@ -33,7 +33,6 @@ Key files in this repo:
 
 ## Build & create image
 
-### Option A — Build locally then load into Minikube
 ```bash
 # Build WAR locally
 mvn clean package -DskipTests
@@ -46,3 +45,29 @@ minikube start --driver=docker
 
 # Load image into minikube so k8s node can use it
 minikube image load docker-java-sample-webapp:1.0
+```
+
+## Deploy to Minikube
+### Apply YAMLs in this order:
+```bash
+kubectl apply -f namespace.yml
+kubectl apply -f deployment.yml -n java-webapp
+kubectl apply -f service.yml -n java-webapp
+```
+
+## Access the application
+### Option 1 — Port-forward (fast, local)
+```bash
+kubectl port-forward svc/webapp-service 8080:80 -n java-webapp
+```
+
+### Option 2 — minikube service (opens browser or prints URL)
+```bash
+minikube service webapp-service -n java-webapp --url
+```
+
+### Option 3 — NodePort + Minikube IP
+```bash
+kubectl get svc webapp-service -n java-webapp
+minikube ip
+```
